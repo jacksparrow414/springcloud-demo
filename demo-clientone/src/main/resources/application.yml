@@ -1,0 +1,16 @@
+server:
+  port: 8083
+  servlet:
+    context-path: /clientOne
+spring:
+  application:
+    name: demo-clientone
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+    lease-renewal-interval-in-seconds: 30
+    lease-expiration-duration-in-seconds: 90
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka/
+    registry-fetch-interval-seconds: 15

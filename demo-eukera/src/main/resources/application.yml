@@ -1,0 +1,21 @@
+server:
+  port: 8081
+  servlet:
+    context-path: /
+spring:
+  application:
+    name: demo-eureka
+eureka:
+  instance:
+    hostname: localhost
+  client:
+    fetch-registry: false
+    register-with-eureka: false
+    service-url:
+      defaultZone: http://${eureka.instance.hostname}:${server.port}
+  # 注册中心的自我保护机制-(enable-self-preservation),默认开启,即当注册中心发现某个client失效时不会立即清除该实例,会等待一段时间才去清除
+  # 在日常开发中,为了方便开发,可将保护机制关闭,并将自动清除服务列表的定时器时间(eviction-interval-timer-in-ms)设置的短一些
+  server:
+    enable-self-preservation: false
+    #驱逐()-间隔-计数器-毫秒(默认60)
+    eviction-interval-timer-in-ms: 60000

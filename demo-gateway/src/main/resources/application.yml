@@ -1,0 +1,54 @@
+server:
+  port: 8082
+  servlet:
+    context-path: /
+spring:
+  application:
+    name: demo-gateway
+eureka:
+  instance:
+    # 默认每个微服务客户端的实例是他的主机名字(host name),这样的话,一个机器上只有一个该服务的实例，可以让一个机器上存在多个该微服务实例,具体配置如下
+    # 详见官方文档 如下:
+    # https://cloud.spring.io/spring-cloud-static/spring-cloud-netflix/2.2.0.RC1/reference/html/#changing-the-eureka-instance-id
+    instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+    # 这里的解释如果按照网上说的心跳间隔,会忽略掉部分内容,建议参考官方文档
+    # 如下:
+    # https://cloud.spring.io/spring-cloud-static/spring-cloud-netflix/2.2.0.RC1/reference/html/#why-is-it-so-slow-to-register-a-service
+    # 租约(续约)-更新-间隔-秒(默认30)
+    lease-renewal-interval-in-seconds: 30
+    # 租约(续约)-过期-持续时间-秒(默认90)
+    lease-expiration-duration-in-seconds: 90
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka/
+    # 注册表-获取=间隔-秒(默认30)
+    registry-fetch-interval-seconds: 15
+# 下面日志打印是为了验证客户端是否按照配置规则发送心跳、以及是否按照配置规则更新注册表
+# 从日志中可以看到freshExecutor代表获取注册表任务、tbeatExecutor代表发送心跳间隔任务
+#logging:
+#  level:
+#    com.netflix: debug
+ribbon:
+  eureka:
+    enabled: false
+zuul:
+  routes:
+    clientone:
+      serviceId: demo-clientone
+      path: /clientOne/**
+      strip-prefix: false
+    clienttwo:
+      serviceId: demo-clienttwo
+      path: /clientTwo/**
+      strip-prefix: false
+#  strip-prefix: false
+# 如果仅仅配置了上面的部分,直接请求网关,http://localhost:8082/clientTwo/testTwoController/testTwo,
+# 不会路由到微服务demo-clienttwo上面,并且会报Load balancer does not have available server for client: demo-clienttwo错误,
+# 还要配置下面的部分,具体参考官方文档,如下:
+# https://cloud.spring.io/spring-cloud-static/spring-cloud-netflix/2.2.0.RC1/reference/html/#router-and-filter-zuul
+# ribbon默认的负载均衡策略是 轮询
+demo-clientone:
+  listOfServers: localhost:8083,localhost:8085
+demo-clienttwo:
+  listOfServers: localhost:8084
+
