@@ -1,6 +1,6 @@
 package com.example.clientthree.democlientthree.controller;
 
-import org.springframework.web.bind.annotation.RequestMapping;
+import com.example.clientthree.democlientthree.provider.TestControllerProvider;
 import org.springframework.web.bind.annotation.RestController;
 
 /**
@@ -9,10 +9,10 @@ import org.springframework.web.bind.annotation.RestController;
  * @Description: TODO
  */
 @RestController
-@RequestMapping(value = "/testOneController")
-public class TestController {
+public class TestController implements TestControllerProvider {
 
-    @RequestMapping(value = "testOne")
+
+    @Override
     public String testOne(){
         System.out.println("this is clientOneCopy");
         return "testThree";

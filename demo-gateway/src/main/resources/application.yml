@@ -31,6 +31,10 @@ eureka:
 ribbon:
   eureka:
     enabled: false
+  ReadTimeOut: 50000
+  ConnectTimeout: 40000
+  MaxAutoRetries: 10 #同一台实例最大重试次数,不包括首次调用
+  MaxAutoRetriesNextServer: 0 #重试负载均衡其他的实例最大重试次数,不包括首次调用
 zuul:
   routes:
     clientone:
@@ -41,6 +45,9 @@ zuul:
       serviceId: demo-clienttwo
       path: /clientTwo/**
       strip-prefix: false
+  host:
+    connect-timeout-millis: 15000
+    socket-timeout-millis: 60000
 #  strip-prefix: false
 # 如果仅仅配置了上面的部分,直接请求网关,http://localhost:8082/clientTwo/testTwoController/testTwo,
 # 不会路由到微服务demo-clienttwo上面,并且会报Load balancer does not have available server for client: demo-clienttwo错误,
@@ -51,4 +58,18 @@ demo-clientone:
   listOfServers: localhost:8083,localhost:8085
 demo-clienttwo:
   listOfServers: localhost:8084
+
+# 关于hystrix的超时时间设置,基本原则为要大于ribbon的超时时间,这里的超时时间是指所有的重试次数时间加起来
+# 例如:超时时间是4秒,重试一次,那么hystrix的超时时间要大于8秒,否则就会熔断,影响微服务的调用,
+# 官方文档如下:
+# https://cloud.spring.io/spring-cloud-static/spring-cloud-netflix/2.2.0.RC1/reference/html/#hystrix-timeouts-and-ribbon-clients
+hystrix:
+  command:
+    default:
+       execution:
+         timeout:
+           enabled: true
+         isolation:
+             thread:
+                timeoutInMilliseconds: 60000
 
