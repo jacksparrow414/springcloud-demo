@@ -2,6 +2,8 @@ server:
   port: 8084
   servlet:
     context-path: /clientTwo
+  tomcat:
+    connection-timeout: 5000
 spring:
   application:
     name: demo-clientTwo
@@ -14,3 +16,10 @@ eureka:
     service-url:
       defaultZone: http://localhost:8081/eureka/
     registry-fetch-interval-seconds: 15
+# 这里配置的是微服务之间的调用超时时间
+feign:
+  client:
+    config:
+      default:
+        connect-timeout: 4000
+        read-timeout: 4000

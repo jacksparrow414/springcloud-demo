@@ -5,6 +5,10 @@ server:
 spring:
   application:
     name: demo-gateway
+  cloud:
+    loadbalancer:
+      retry:
+        enabled: true
 eureka:
   instance:
     # 默认每个微服务客户端的实例是他的主机名字(host name),这样的话,一个机器上只有一个该服务的实例，可以让一个机器上存在多个该微服务实例,具体配置如下
@@ -31,23 +35,32 @@ eureka:
 ribbon:
   eureka:
     enabled: false
-  ReadTimeOut: 50000
-  ConnectTimeout: 40000
-  MaxAutoRetries: 10 #同一台实例最大重试次数,不包括首次调用
-  MaxAutoRetriesNextServer: 0 #重试负载均衡其他的实例最大重试次数,不包括首次调用
+  # 这里参数千万要注意：不要写成ReadTimeOut,参数名字写错了,配置不会生效,这个错误花了两个上午的时间
+  ReadTimeout: 4000
+  ConnectTimeout: 4000
+  MaxAutoRetries: 0 #同一个微服务实例最大重试次数,不包括首次调用
+  MaxAutoRetriesNextServer: 1 #重试负载均衡其他的实例最大重试次数,不包括首次调用
+
 zuul:
   routes:
     clientone:
       serviceId: demo-clientone
       path: /clientOne/**
       strip-prefix: false
+#      retryable: true
     clienttwo:
       serviceId: demo-clienttwo
       path: /clientTwo/**
       strip-prefix: false
+# 单独配置某一个微服务的重试,如果clientTwo请求clientOne这个微服务,其中本次请求负载均衡到了clientOne1上,但是在1执行期间超时,
+# 那么clientTwo就会重试,根据上面ribbon的负载均衡策略,再去请求N次(N为上面ribbon的最后两个配置)微服务
+#      retryable: true
   host:
-    connect-timeout-millis: 15000
-    socket-timeout-millis: 60000
+    connect-timeout-millis: 10000
+    socket-timeout-millis: 10000
+#    全局重试,pom文件中引入spring-retry
+  retryable: true
+
 #  strip-prefix: false
 # 如果仅仅配置了上面的部分,直接请求网关,http://localhost:8082/clientTwo/testTwoController/testTwo,
 # 不会路由到微服务demo-clienttwo上面,并且会报Load balancer does not have available server for client: demo-clienttwo错误,
@@ -63,13 +76,17 @@ demo-clienttwo:
 # 例如:超时时间是4秒,重试一次,那么hystrix的超时时间要大于8秒,否则就会熔断,影响微服务的调用,
 # 官方文档如下:
 # https://cloud.spring.io/spring-cloud-static/spring-cloud-netflix/2.2.0.RC1/reference/html/#hystrix-timeouts-and-ribbon-clients
-hystrix:
-  command:
-    default:
-       execution:
-         timeout:
-           enabled: true
-         isolation:
-             thread:
-                timeoutInMilliseconds: 60000
+#hystrix:
+#  command:
+#    default:
+#       execution:
+#         timeout:
+#           enabled: false
+#         isolation:
+#             thread:
+#                timeoutInMilliseconds: 60000
+#feign:
+#  hystrix:
+#    enabled: false
+
 

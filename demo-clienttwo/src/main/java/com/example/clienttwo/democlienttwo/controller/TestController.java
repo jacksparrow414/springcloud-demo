@@ -25,6 +25,8 @@ public class TestController {
 
     @RequestMapping(value = "testRpc")
     public String testRpc(){
-       return testOneControllerService.testOne();
+        String s = testOneControllerService.testOne();
+        System.out.println(s);
+        return s;
     }
 }
