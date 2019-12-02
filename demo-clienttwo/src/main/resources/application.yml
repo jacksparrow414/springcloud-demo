@@ -23,3 +23,12 @@ feign:
       default:
         connect-timeout: 4000
         read-timeout: 4000
+  hystrix:
+    enabled: true
+hystrix:
+  command:
+    default:
+      execution:
+        isolation:
+          thread:
+            timeoutInMilliseconds: 4000
