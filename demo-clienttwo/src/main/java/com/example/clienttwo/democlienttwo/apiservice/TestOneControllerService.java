@@ -1,6 +1,7 @@
 package com.example.clienttwo.democlienttwo.apiservice;
 
 import com.example.clientone.democlientone.provider.TestControllerProvider;
+import com.example.clienttwo.democlienttwo.fallback.ClientTwoFallBack;
 import org.springframework.cloud.openfeign.FeignClient;
 
 /**
@@ -8,6 +9,6 @@ import org.springframework.cloud.openfeign.FeignClient;
  * client1中的contentPath 不是/,所以这里要配置path参数,否则会报404,找不到
  * @author jacksparrow414
  */
-@FeignClient(value = "demo-clientone",path = "/clientOne")
+@FeignClient(value = "demo-clientone",path = "/clientOne",fallbackFactory  = ClientTwoFallBack.class )
 public interface TestOneControllerService extends TestControllerProvider {
 }
