@@ -1,0 +1,18 @@
+server:
+  port: 8086
+  servlet:
+    context-path: /clientfour
+  tomcat:
+    connection-timeout: 10000
+spring:
+  application:
+    name: demo-clientfour
+eureka:
+  instance:
+    instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
+    lease-expiration-duration-in-seconds: 30
+    lease-renewal-interval-in-seconds: 30
+  client:
+    service-url:
+      defaultZone: http://localhost:8081/eureka/
+    registry-fetch-interval-seconds: 15
