@@ -1,9 +1,14 @@
 package com.example.clienttwo.democlienttwo.controller;
 
+import com.example.clientone.democlientone.entity.SwUser;
 import com.example.clienttwo.democlienttwo.apiservice.TestOneControllerService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+
+import java.util.List;
 
 /**
  * @Author jacksparrow414
@@ -28,5 +33,15 @@ public class TestController {
         String s = testOneControllerService.testOne();
         System.out.println(s);
         return s;
+    }
+
+    @RequestMapping(value = "getOneServiceUser")
+    public List<SwUser> getOneServiceUser(){
+       return testOneControllerService.listSwUser();
+    }
+
+    @PostMapping(value = "addOneServiceUser")
+    public SwUser addOneServiceUser(@RequestBody SwUser swUser){
+        return  testOneControllerService.addSwUser(swUser);
     }
 }
