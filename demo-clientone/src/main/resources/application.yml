@@ -5,6 +5,18 @@ server:
 spring:
   application:
     name: demo-clientone
+  datasource:
+      url: jdbc:mysql://localhost:3306/dhb?useUnicode=true&characterEncoding=UTF-8
+      username: root
+      password: 12345
+#  rabbitmq:
+#    addresses: 127.0.0.1:5672
+#    username: admin
+#    password: admin
+#  cloud:
+#    alibaba:
+#      seata:
+#        tx-service-group: my_test_tx_group
 eureka:
   instance:
     instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
@@ -21,3 +33,17 @@ eureka:
 #      default:
 #        connect-timeout: 5000
 #        read-timeout: 5000
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:/mapper/*.xml
+
+#阿里分布式事务配置
+#seata:
+#  service:
+#    vgroup-mapping:
+#      my_test_tx_group: seata-server
+#    grouplist:
+#      seata-server: 127.0.0.1:9091
+#    enable-degrade: false
+#    disable-global-transaction: false

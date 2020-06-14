@@ -5,6 +5,10 @@ server:
 spring:
   application:
     name: demo-clientone
+  datasource:
+    url: jdbc:mysql://localhost:3306/dhb?useUnicode=true&characterEncoding=UTF-8
+    username: root
+    password: 12345
 eureka:
   instance:
     instance-id: ${spring.application.name}:${vcap.application.instance_id:${spring.application.instance_id:${random.value}}}
@@ -21,3 +25,7 @@ eureka:
 #      default:
 #        connect-timeout: 5000
 #        read-timeout: 5000
+mybatis-plus:
+  configuration:
+    log-impl: org.apache.ibatis.logging.stdout.StdOutImpl
+  mapper-locations: classpath*:/mapper/*.xml
