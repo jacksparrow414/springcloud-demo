@@ -64,9 +64,11 @@ zuul:
 #  strip-prefix: false
 # 如果仅仅配置了上面的部分,直接请求网关,http://localhost:8082/clientTwo/testTwoController/testTwo,
 # 不会路由到微服务demo-clienttwo上面,并且会报Load balancer does not have available server for client: demo-clienttwo错误,
+# 那是因为上面的ribbon.eureka 设置的是false，所以ribbon不会去注册中心拉取各个微服务的实例集合信息，所以要配置下面的信息
 # 还要配置下面的部分,具体参考官方文档,如下:
 # https://cloud.spring.io/spring-cloud-static/spring-cloud-netflix/2.2.0.RC1/reference/html/#router-and-filter-zuul
 # ribbon默认的负载均衡策略是 轮询
+# 如果ribbon.eureka 设置的为true 则不需要配置下面的信息
 demo-clientone:
   listOfServers: localhost:8083,localhost:8085
 demo-clienttwo:
