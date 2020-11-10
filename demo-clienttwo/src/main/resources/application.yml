@@ -37,8 +37,9 @@ feign:
       default:
         connect-timeout: 4000
         read-timeout: 4000
-#  hystrix:
-#    enabled: true
+  # 如果要测试fallbackfactory可以把这个注释放开，如果只想单纯的测试调用超时，可以把这个注释掉
+  hystrix:
+    enabled: true
 #hystrix:
 #  command:
 #    default:
