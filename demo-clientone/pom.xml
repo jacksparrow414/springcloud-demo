@@ -19,7 +19,7 @@
         <spring-cloud.version>Hoxton.M2</spring-cloud.version>
         <druid.spring.boot.starter.version>1.1.13</druid.spring.boot.starter.version>
         <mybatis.plus.boot.starter.version>3.1.0</mybatis.plus.boot.starter.version>
-        <mysql.version>8.0.18</mysql.version>
+        <mysql.version>8.0.28</mysql.version>
         <fastjson.version>1.2.56</fastjson.version>
     </properties>
 
