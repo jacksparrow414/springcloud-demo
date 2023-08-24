@@ -22,8 +22,8 @@ It is just composed of small examples. It is for you to quickly understand the m
 |demo-eureka  | demo-eureka is a common registration center for all microservices. All microservice instances will be registered here. It can be simply understood as a list. If A needs B, you can find it in this list
 |demo-gateway  | The gateway of the microservice, which is also an instance, will register with the registration center after startup, and undertake important tasks such as current limiting, routing, load balancing, fuse, authentication, and authentication
 |demo-clientone | ClientOne is a simulated external service application, the same is true for the following two clients, just to demonstrate some functions of the springcloud framework
-|demo-clienttwo | Same as above
-|demo-clientthree | Same as above
+|demo-clienttwo | Same as above, another simulated application
+|demo-clientthree | It is the same application as ClientTwo, but the port is different, and all the methods in them are the same
 |nginx.conf | nginx configuration file, used to access its own file server, static resources, request forwarding, etc
 
 ## The basic request process of the client (PC, mobile, etc.)
