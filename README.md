@@ -9,7 +9,7 @@ It is designed for those who are not familiar with SpringCloud. The code does no
 It is just composed of small examples. It is for you to quickly understand the main components of SpringCloud and quickly get started with SpringCloud.
 
 ## project directory structure
-- demo-eureka, registry example
+- demo-eureka, registry center example
 - demo-gateway, gateway example
 - demo-clientone, simulated microservice client 1
 - demo-clienttwo, simulated microservice client 2
