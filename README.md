@@ -19,7 +19,7 @@ It is just composed of small examples. It is for you to quickly understand the m
 ## Microservice Description
 |Name  | Description
 |------------- | -------------
-|demo-eureka  | demo-eureka is a common registration center for all microservices. All microservice instances will be registered here. It can be simply understood as a list. If A needs B, you can find it in this list
+|demo-eureka  | demo-eureka is a common registration center for all microservices. All microservice instances will be registered here. It can be simply understood as a list. If A needs B, just come to this list and find it
 |demo-gateway  | The gateway of the microservice, which is also an instance, will register with the registration center after startup, and undertake important tasks such as current limiting, routing, load balancing, fuse, authentication, and authentication
 |demo-clientone | ClientOne is a simulated external service application, the same is true for the following two clients, just to demonstrate some functions of the springcloud framework
 |demo-clienttwo | Same as above, another simulated application
