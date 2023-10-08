@@ -1,4 +1,4 @@
-[中文文档](https://github.com/jacksparrow414/springcloud-demo/edit/master/README_ZH_CN.md)
+[中文文档](https://github.com/jacksparrow414/springcloud-demo/blob/master/README_ZH_CN.md)
 # demo description
 A small example of getting started with Spring Cloud, which is being updated continuously
 
